@@ -21,4 +21,23 @@ function hasher(password: string, salt: string) {
   return { salt, hashedPassword }
 }
 
-console.log(generateSalt(), generateSalt(15))
+function hash(password: string, salt: string) {
+  if(!password || !salt) {
+    throw new Error('Must provide password and salt values')
+  }
+
+  if (typeof password !== 'string' || typeof salt !== 'string') {
+    throw new Error('password and salt must either be a string')
+  }
+
+  return hasher(password, salt)
+}
+
+/*{
+  salt: '9155e7ec4a0f',
+  hashedPassword: '44d8f971f99ac15cdc62b264e2f7ac87245eab5f4f5c44d0cb342527edab0ca50faaed867ce4dacf5341ca452a32ecef41786e575a790e6504333a3521e81637'
+}*/
+
+console.log(
+  hash('Wisdow', generateSalt())
+)
