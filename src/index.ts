@@ -33,11 +33,21 @@ function hash(password: string, salt: string) {
   return hasher(password, salt)
 }
 
-/*{
-  salt: '9155e7ec4a0f',
-  hashedPassword: '44d8f971f99ac15cdc62b264e2f7ac87245eab5f4f5c44d0cb342527edab0ca50faaed867ce4dacf5341ca452a32ecef41786e575a790e6504333a3521e81637'
-}*/
+function compare(password: string, hashToCompare: ReturnType<typeof hasher>) {
+  if (!password || !hashToCompare) {
+    throw new Error('password and hash is required to compare')
+  }
+  if (typeof password !== 'string' || typeof hashToCompare !== 'object') {
+    throw new Error('password must be a String and hash must be an Object')
+  }
 
-console.log(
-  hash('Wisdow', generateSalt())
-)
+  const passwordData = hash(password, hashToCompare.salt)
+
+  return passwordData.hashedPassword === hashToCompare.hashedPassword
+}
+
+export {
+  generateSalt,
+  hash,
+  compare
+}
